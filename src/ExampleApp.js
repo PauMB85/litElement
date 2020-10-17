@@ -3,13 +3,17 @@ import './components/basic-example/basic-example.js';
 import './components/properties-example/properties-example.js';
 import './components/logic-example/logical-example.js';
 import './components/event-example/event-example.js';
-import './components/style-example/style-example.js'
+import './components/style-example/style-example.js';
+import './components/data-binding/data-binding.js';
+import './components/callback-component/callback-component.js';
+import './components/formularios/my-form.js';
 
 export class ExampleApp extends LitElement {
   static get properties() {
     return {
       title: { type: String },
       page: { type: String },
+      myObject: { type: Object }
     };
   }
 
@@ -51,6 +55,18 @@ export class ExampleApp extends LitElement {
     `;
   }
 
+  constructor() {
+    super();
+    this.myObject = {
+      name: 'Pau',
+      surname: 'Maravi'
+    }
+  }
+
+  myCallback(data){
+    console.log('ejecutamos callback', data);
+  }
+
   render() {
     return html`
       <main>
@@ -85,6 +101,25 @@ export class ExampleApp extends LitElement {
           <p>componente <b>style-example</b> cambiamos el color de nuestro texto</p>
           <style-example />
         </section>
+
+        <section class="my-box">
+          <h3>data-binding</h3>
+          <p>componente <b>data-binding</b> recibe un string y un objeto</p>
+          <data-binding value="Hello" .myObject="${this.myObject}"/>
+        </section>
+
+        <section class="my-box">
+          <h3>callback</h3>
+          <p>componente <b>callback-component</b> ejecuta funcion que le pasa padre(mira en al consola)</p>
+          <callback-component .callback="${this.myCallback}"/>
+        </section>
+
+        <section class="my-box">
+          <h3>formulario</h3>
+          <p>componente <b>form-component</b></p>
+          <my-form .callback="${this.myCallback}"/>
+        </section>
+        
         
       </main>
     `;
